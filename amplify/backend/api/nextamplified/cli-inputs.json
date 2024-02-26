@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "nextamplified",
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7,
+      "apiKeyExpirationDate": "2024-03-04T04:16:53.200Z",
+      "keyDescription": "dev"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": []
+  }
+}
