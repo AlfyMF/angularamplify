@@ -11,6 +11,7 @@ import { Todo, ListTodosQuery } from '../../API';
 import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 import * as subscriptions from '../../graphql/subscriptions';
+import { post } from 'aws-amplify/api';
 
 @Component({
   standalone: true,
@@ -67,18 +68,40 @@ export class TodosComponent implements OnInit, OnDestroy {
     this.subscription = null;
   }
 
-  public async onCreate(todo: Todo) {
+  // public async onCreate(todo: Todo) {
+  //   try {
+  //     const response = await this.client.graphql({
+  //       query: mutations.createTodo,
+  //       variables: {
+  //         input: todo
+  //       }
+  //     });
+  //     console.log('item created!', response);
+  //     this.createForm.reset();
+  //   } catch (e) {
+  //     console.log('error creating todo...', e);
+  //   }
+  // }
+
+  async onCreate(todo: Todo) {
     try {
-      const response = await this.client.graphql({
-        query: mutations.createTodo,
-        variables: {
-          input: todo
+      const restOperation = post({
+        apiName: 'todoApi',
+        path: '/todo',
+        options: {
+          body: {
+            message: 'Mow the lawn'
+          }
         }
       });
-      console.log('item created!', response);
-      this.createForm.reset();
+  
+      const { body } = await restOperation.response;
+      const response = await body.json();
+  
+      console.log('POST call succeeded');
+      console.log(response);
     } catch (e) {
-      console.log('error creating todo...', e);
+      console.log('POST call failed: ', e);
     }
   }
 }
