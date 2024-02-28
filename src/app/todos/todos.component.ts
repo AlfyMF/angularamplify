@@ -83,4 +83,24 @@ export class TodosComponent implements OnInit, OnDestroy {
       console.log('error creating todo...', e);
     }
   }
+
+  public async onDelete(todoId: any) {
+    try {
+      const todoDetails = {
+        id: todoId
+      };
+    
+      console.log("onDelete", todoId);
+      const response = await this.client.graphql({
+        query: mutations.deleteTodo,
+        variables: {
+          input: todoDetails
+        }
+      });
+      console.log('item deleted!', response);
+      this.createForm.reset();
+    } catch (e) {
+      console.log('error deleting todo...', e);
+    }
+  }
 }
